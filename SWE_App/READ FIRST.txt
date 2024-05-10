@@ -1,0 +1,12 @@
+Hello, and welcome to my calculator application!
+A few things to note before running the application:
+
+*The wxWidgets is installed on my computer in my c-drive within a folder called "full sail"
+
+The file path for my entire wxWdigets folder is 
+-> C:\full sail\wxWidgets
+
+The file paths that were used when setting up my project are:
+-> C:\full sail\wxWidgets\include
+--> C:\full sail\wxWidgets\include\msvc
+---> C:\full sail\wxWidgets\lib\vc_x64_lib

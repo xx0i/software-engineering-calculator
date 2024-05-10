@@ -166,12 +166,12 @@ void Window::equalsEvent(wxCommandEvent&)
 	}
 
 	//checks that no operator is repeated in a row
-	for (int i = 0; i < text.length(); i++) {
-		if ((text[i] == '+' && text[i + 1] == text[i]) || (text[i] == '*' && text[i + 1] == text[i]) || (text[i] == '/' && text[i + 1] == text[i]) ||
-			(text[i] == '%' && text[i + 1] == text[i]) || (text[i] == '.' && text[i + 1] == text[i]) || (text[i] == '²' && text[i + 1] == text[i]) ||
-			(text[i] == 'S' && text[i + 1] == 'i' && text[i + 2] == 'n' && text[i + 3] == 'S' && text[i + 4] == 'i' && text[i + 5] == 'n') ||
-			(text[i] == 'C' && text[i + 1] == 'o' && text[i + 2] == 's' && text[i + 3] == 'C' && text[i + 4] == 'o' && text[i + 5] == 's') ||
-			(text[i] == 'T' && text[i + 1] == 'a' && text[i + 2] == 'n' && text[i + 3] == 'T' && text[i + 4] == 'a' && text[i + 5] == 'n')) {
+	for (int txtChar = 0; txtChar < text.length(); txtChar++) {
+		if ((text[txtChar] == '+' && text[txtChar + 1] == text[txtChar]) || (text[txtChar] == '*' && text[txtChar + 1] == text[txtChar]) || (text[txtChar] == '/' && text[txtChar + 1] == text[txtChar]) ||
+			(text[txtChar] == '%' && text[txtChar + 1] == text[txtChar]) || (text[txtChar] == '.' && text[txtChar + 1] == text[txtChar]) || (text[txtChar] == '²' && text[txtChar + 1] == text[txtChar]) ||
+			(text[txtChar] == 'S' && text[txtChar + 1] == 'i' && text[txtChar + 2] == 'n' && text[txtChar + 3] == 'S' && text[txtChar + 4] == 'i' && text[txtChar + 5] == 'n') ||
+			(text[txtChar] == 'C' && text[txtChar + 1] == 'o' && text[txtChar + 2] == 's' && text[txtChar + 3] == 'C' && text[txtChar + 4] == 'o' && text[txtChar + 5] == 's') ||
+			(text[txtChar] == 'T' && text[txtChar + 1] == 'a' && text[txtChar + 2] == 'n' && text[txtChar + 3] == 'T' && text[txtChar + 4] == 'a' && text[txtChar + 5] == 'n')) {
 			textBox->WriteText("Invalid Equation, Please Enter a valid Equation");
 			return;
 		}
@@ -197,7 +197,7 @@ void Window::equalsEvent(wxCommandEvent&)
 		std::string tokenVer2 = token.ToStdString();
 
 		//START OF TOKEN PROCESSING -> for all calculations if the number is whole no decimal values are shown, otherwise six decimal values are shown
-		//how to get past the first paranthesis for the negative sign
+		//how to get past the first parenthesis for the negative sign
 		if (tokenVer2 == '(' || tokenVer2 == "Sin(" || tokenVer2 == "Cos(" || tokenVer2 == "Tan(") {
 			continue;
 		}
@@ -273,9 +273,9 @@ void Window::equalsEvent(wxCommandEvent&)
 			}
 			//calculations for if the second half of the equation/the operand is negative [+-*/% sin/cos/tan (for unary operators the negative is between the operator and the term]
 			else if (tokenVer2[0] == ')' && tokenizer.HasMoreTokens() == false) {
-				for (int i = 0; i < text.size(); i++) {
+				for (int currTextChar = 0; currTextChar < text.size(); currTextChar++) {
 					//addition
-					if (text[i] == '+') {
+					if (text[currTextChar] == '+') {
 						tokenVer2 = tokenVer2.substr(1, tokenVer2.length());
 						result += (std::stof(tokenVer2) * -1);
 						decimal = std::modf(result, &whole);
@@ -289,7 +289,7 @@ void Window::equalsEvent(wxCommandEvent&)
 						break;
 					}
 					//subtraction
-					else if (text[i] == '-') {
+					else if (text[currTextChar] == '-') {
 						if (text.Contains("-") && text.Contains("+") || text.Contains("-") && text.Contains("*") || text.Contains("-") && text.Contains("/")
 							|| text.Contains("-") && text.Contains("%")) {
 							continue;
@@ -307,7 +307,7 @@ void Window::equalsEvent(wxCommandEvent&)
 						break;
 					}
 					//multiplication
-					else if (text[i] == '*') {
+					else if (text[currTextChar] == '*') {
 						tokenVer2 = tokenVer2.substr(1, tokenVer2.length());
 						result *= (std::stof(tokenVer2) * -1);
 						decimal = std::modf(result, &whole);
@@ -321,7 +321,7 @@ void Window::equalsEvent(wxCommandEvent&)
 						break;
 					}
 					//division
-					else if (text[i] == '/') {
+					else if (text[currTextChar] == '/') {
 						tokenVer2 = tokenVer2.substr(1, tokenVer2.length());
 						if (std::stof(tokenVer2) != 0) {
 							result /= (std::stof(tokenVer2) * -1);
@@ -340,7 +340,7 @@ void Window::equalsEvent(wxCommandEvent&)
 						break;
 					}
 					//modulo
-					else if (text[i] == '%') {
+					else if (text[currTextChar] == '%') {
 						tokenVer2 = tokenVer2.substr(1, tokenVer2.length());
 						if (std::stof(tokenVer2) != 0) {
 							result = std::fmodf(result, std::stof(tokenVer2));
@@ -359,7 +359,7 @@ void Window::equalsEvent(wxCommandEvent&)
 						break;
 					}
 					//Sin
-					else if (text[i] == 'S') {
+					else if (text[currTextChar] == 'S') {
 						tokenVer2 = tokenVer2.substr(1, tokenVer2.length());
 						std::string num = tokenVer2;
 						float result = std::stof(num);
@@ -375,7 +375,7 @@ void Window::equalsEvent(wxCommandEvent&)
 						break;
 					}
 					//Cos
-					else if (text[i] == 'C') {
+					else if (text[currTextChar] == 'C') {
 						tokenVer2 = tokenVer2.substr(1, tokenVer2.length());
 						std::string num = tokenVer2;
 						float result = std::stof(num);
@@ -391,7 +391,7 @@ void Window::equalsEvent(wxCommandEvent&)
 						break;
 					}
 					//Tan
-					else if (text[i] == 'T') {
+					else if (text[currTextChar] == 'T') {
 						tokenVer2 = tokenVer2.substr(1, tokenVer2.length());
 						std::string num = tokenVer2;
 						float result = std::stof(num);
