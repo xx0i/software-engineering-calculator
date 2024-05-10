@@ -1,40 +1,604 @@
 #include "Window.h"
+#include <wx/tokenzr.h>
+
+//EVENT TABLE
+wxBEGIN_EVENT_TABLE(Window, wxFrame)
+EVT_BUTTON(20123, Window::zeroEvent)
+EVT_BUTTON(11212, Window::oneEvent)
+EVT_BUTTON(32313, Window::twoEvent)
+EVT_BUTTON(13212, Window::threeEvent)
+EVT_BUTTON(24234, Window::fourEvent)
+EVT_BUTTON(15623, Window::fiveEvent)
+EVT_BUTTON(13523, Window::sixEvent)
+EVT_BUTTON(14322, Window::sevenEvent)
+EVT_BUTTON(25453, Window::eightEvent)
+EVT_BUTTON(15354, Window::nineEvent)
+EVT_BUTTON(26433, Window::addEvent)
+EVT_BUTTON(18743, Window::minusEvent)
+EVT_BUTTON(32412, Window::multiplyEvent)
+EVT_BUTTON(25231, Window::divideEvent)
+EVT_BUTTON(12643, Window::modEvent)
+EVT_BUTTON(16431, Window::sinEvent)
+EVT_BUTTON(19321, Window::cosEvent)
+EVT_BUTTON(15423, Window::tanEvent)
+EVT_BUTTON(32134, Window::equalsEvent)
+EVT_BUTTON(32221, Window::clearEvent)
+EVT_BUTTON(31123, Window::deleteEvent)
+EVT_BUTTON(17934, Window::decimalEvent)
+EVT_BUTTON(29723, Window::negativeEvent)
+EVT_BUTTON(31323, Window::squaredEvent)
+wxEND_EVENT_TABLE()
 
 Window::Window() : wxFrame(nullptr, wxID_ANY, "Calculator", wxPoint(200, 200), wxSize(392, 462)) //default constructor
 {
 	//text control
-	textBox = new wxTextCtrl(this, wxID_ANY, "", wxPoint(16,20), wxSize(345,166));
+	textBox = new wxTextCtrl(this, 12312, "", wxPoint(16, 20), wxSize(345, 166));
 	//numbers 0-9
-	zero = new wxButton(this, wxID_ANY, "0", wxPoint(20,200), wxSize(40,40));
-	one = new wxButton(this, wxID_ANY, "1", wxPoint(80,200), wxSize(40,40));
-	two = new wxButton(this, wxID_ANY, "2", wxPoint(140,200), wxSize(40,40));
-	three = new wxButton(this, wxID_ANY, "3", wxPoint(200,200), wxSize(40,40));
-	four = new wxButton(this, wxID_ANY, "4", wxPoint(260,200), wxSize(40,40));
-	five = new wxButton(this, wxID_ANY, "5", wxPoint(20,254), wxSize(40,40));
-	six = new wxButton(this, wxID_ANY, "6", wxPoint(80,254), wxSize(40,40));
-	seven = new wxButton(this, wxID_ANY, "7", wxPoint(140,254), wxSize(40,40));
-	eight = new wxButton(this, wxID_ANY, "8", wxPoint(200,254), wxSize(40,40));
-	nine = new wxButton(this, wxID_ANY, "9", wxPoint(260,254), wxSize(40,40));
+	zero = new wxButton(this, 20123, "0", wxPoint(20, 200), wxSize(40, 40));
+	one = new wxButton(this, 11212, "1", wxPoint(80, 200), wxSize(40, 40));
+	two = new wxButton(this, 32313, "2", wxPoint(140, 200), wxSize(40, 40));
+	three = new wxButton(this, 13212, "3", wxPoint(200, 200), wxSize(40, 40));
+	four = new wxButton(this, 24234, "4", wxPoint(260, 200), wxSize(40, 40));
+	five = new wxButton(this, 15623, "5", wxPoint(20, 254), wxSize(40, 40));
+	six = new wxButton(this, 13523, "6", wxPoint(80, 254), wxSize(40, 40));
+	seven = new wxButton(this, 14322, "7", wxPoint(140, 254), wxSize(40, 40));
+	eight = new wxButton(this, 25453, "8", wxPoint(200, 254), wxSize(40, 40));
+	nine = new wxButton(this, 15354, "9", wxPoint(260, 254), wxSize(40, 40));
 	//binary operators
-	addition = new wxButton(this, wxID_ANY, "+", wxPoint(20,308), wxSize(40,40));
-	subtraction = new wxButton(this, wxID_ANY, "-", wxPoint(80,308), wxSize(40,40));
-	multiplication = new wxButton(this, wxID_ANY, "*", wxPoint(140,308), wxSize(40,40));
-	division = new wxButton(this, wxID_ANY, "/", wxPoint(200,308), wxSize(40,40));
-	modulo = new wxButton(this, wxID_ANY, "%", wxPoint(260,308), wxSize(40,40));
+	addition = new wxButton(this, 26433, "+", wxPoint(20, 308), wxSize(40, 40));
+	subtraction = new wxButton(this, 18743, "-", wxPoint(80, 308), wxSize(40, 40));
+	multiplication = new wxButton(this, 32412, "*", wxPoint(140, 308), wxSize(40, 40));
+	division = new wxButton(this, 25231, "/", wxPoint(200, 308), wxSize(40, 40));
+	modulo = new wxButton(this, 12643, "%", wxPoint(260, 308), wxSize(40, 40));
 	//unary operators
-	sin = new wxButton(this, wxID_ANY, "sin", wxPoint(80,362), wxSize(40,40));
-	cos = new wxButton(this, wxID_ANY, "cos", wxPoint(140,362), wxSize(40,40));
-	tan = new wxButton(this, wxID_ANY, "tan", wxPoint(200,362), wxSize(40,40));
+	sin = new wxButton(this, 16431, "sin", wxPoint(80, 362), wxSize(40, 40));
+	cos = new wxButton(this, 19321, "cos", wxPoint(140, 362), wxSize(40, 40));
+	tan = new wxButton(this, 15423, "tan", wxPoint(200, 362), wxSize(40, 40));
 	//equals
-	equals = new wxButton(this, wxID_ANY, "=", wxPoint(320,200), wxSize(40,40));
+	equals = new wxButton(this, 32134, "=", wxPoint(320, 200), wxSize(40, 40));
 	//clear
-	clear = new wxButton(this, wxID_ANY, "clear", wxPoint(320,254), wxSize(40,40));
+	clear = new wxButton(this, 32221, "clear", wxPoint(320, 254), wxSize(40, 40));
 	//backspace
-	backspace = new wxButton(this, wxID_ANY, "delete", wxPoint(320,308), wxSize(40,40));
+	del = new wxButton(this, 31123, "delete", wxPoint(320, 308), wxSize(40, 40));
 	//decimal
-	decimal = new wxButton(this, wxID_ANY, ".", wxPoint(260,362), wxSize(40,40));
+	decimal = new wxButton(this, 17934, "dec.(.)", wxPoint(260, 362), wxSize(40, 40));
 	//negative
-	negative = new wxButton(this, wxID_ANY, "+/-", wxPoint(320,362), wxSize(40,40));
+	negative = new wxButton(this, 29723, "neg.(-)", wxPoint(320, 362), wxSize(40, 40));
 	//x^2 (adding extra to make buttons even)
-	squared = new wxButton(this, wxID_ANY, "x²", wxPoint(20, 362), wxSize(40, 40));
+	squared = new wxButton(this, 31323, "x²", wxPoint(20, 362), wxSize(40, 40));
+}
+
+//BUTTON EVENTS
+void Window::zeroEvent(wxCommandEvent&)
+{
+	textBox->WriteText("0");
+}
+
+void Window::oneEvent(wxCommandEvent&)
+{
+	textBox->WriteText("1");
+}
+
+void Window::twoEvent(wxCommandEvent&)
+{
+	textBox->WriteText("2");
+}
+
+void Window::threeEvent(wxCommandEvent&)
+{
+	textBox->WriteText("3");
+}
+
+void Window::fourEvent(wxCommandEvent&)
+{
+	textBox->WriteText("4");
+}
+
+void Window::fiveEvent(wxCommandEvent&)
+{
+	textBox->WriteText("5");
+}
+
+void Window::sixEvent(wxCommandEvent&)
+{
+	textBox->WriteText("6");
+}
+
+void Window::sevenEvent(wxCommandEvent&)
+{
+	textBox->WriteText("7");
+}
+
+void Window::eightEvent(wxCommandEvent&)
+{
+	textBox->WriteText("8");
+}
+
+void Window::nineEvent(wxCommandEvent&)
+{
+	textBox->WriteText("9");
+}
+
+void Window::addEvent(wxCommandEvent&)
+{
+	textBox->WriteText("+");
+}
+
+void Window::minusEvent(wxCommandEvent&)
+{
+	textBox->WriteText("-");
+}
+
+void Window::multiplyEvent(wxCommandEvent&)
+{
+	textBox->WriteText("*");
+}
+
+void Window::divideEvent(wxCommandEvent&)
+{
+	textBox->WriteText("/");
+}
+
+void Window::modEvent(wxCommandEvent&)
+{
+	textBox->WriteText("%");
+}
+
+void Window::sinEvent(wxCommandEvent&)
+{
+	textBox->WriteText("Sin");
+}
+
+void Window::cosEvent(wxCommandEvent&)
+{
+	textBox->WriteText("Cos");
+}
+
+void Window::tanEvent(wxCommandEvent&)
+{
+	textBox->WriteText("Tan");
+}
+
+void Window::equalsEvent(wxCommandEvent&)
+{
+	//sets up the string and textctrl for later
+	textBox->WriteText("=");
+	wxString text = textBox->GetValue();
+	textBox->Clear();
+
+	//EXCEPTION HANDLING
+	//checks the box isn't empty
+	if (text.IsEmpty() || text == '=') {
+		textBox->WriteText("Please Enter an Equation");
+		return;
+	}
+
+	//checks the length isn't one
+	if (text.length() == 2) {
+		textBox->WriteText("Please Enter a valid Equation");
+		return;
+	}
+
+	//checks that no operator is repeated in a row
+	for (int i = 0; i < text.length(); i++) {
+		if ((text[i] == '+' && text[i + 1] == text[i]) || (text[i] == '*' && text[i + 1] == text[i]) || (text[i] == '/' && text[i + 1] == text[i]) ||
+			(text[i] == '%' && text[i + 1] == text[i]) || (text[i] == '.' && text[i + 1] == text[i]) || (text[i] == '²' && text[i + 1] == text[i]) ||
+			(text[i] == 'S' && text[i + 1] == 'i' && text[i + 2] == 'n' && text[i + 3] == 'S' && text[i + 4] == 'i' && text[i + 5] == 'n') ||
+			(text[i] == 'C' && text[i + 1] == 'o' && text[i + 2] == 's' && text[i + 3] == 'C' && text[i + 4] == 'o' && text[i + 5] == 's') ||
+			(text[i] == 'T' && text[i + 1] == 'a' && text[i + 2] == 'n' && text[i + 3] == 'T' && text[i + 4] == 'a' && text[i + 5] == 'n')) {
+			textBox->WriteText("Invalid Equation, Please Enter a valid Equation");
+			return;
+		}
+	}
+	//checks that the equation has a value before/after the operator
+	if ((text.ends_with("+=")) || (text.ends_with("-=")) || (text.ends_with("*=")) || (text.ends_with("/=")) || (text.ends_with("%=")) || (text.ends_with(".="))
+		|| (text.ends_with("n=")) || (text.ends_with("s=")) || (text.ends_with(")=")) || text[0] == '+' || text[0] == '*' || text[0] == '/' || text[0] == '%' || text[0] == '²') {
+		textBox->WriteText("Invalid Equation, Please Enter a valid Equation");
+		return;
+	}
+
+	//VALID EQUATION SOLVING
+	float result = 0.0f;
+	float whole;
+	float decimal;
+	wxStringTokenizer tokenizer(text, "+-*/%");
+	tokenizer.SetString(text, "+-*/%");
+	while (tokenizer.HasMoreTokens())
+	{
+		wxString token = tokenizer.GetNextToken();
+		std::string tokenVer2 = token.ToStdString();
+
+		//START OF TOKEN PROCESSING -> for all calculations if the number is whole no decimal values are shown, otherwise six decimal values are shown
+		if (tokenVer2 == '(' || tokenVer2 == "Sin(" || tokenVer2 == "Cos(" || tokenVer2 == "Tan(") {
+			continue;
+		}
+		//calculations for if the negative sign is in front of the sin/cos/tan
+		if ((tokenVer2[0] == ')' && tokenVer2[1] == 'S') || (tokenVer2[0] == ')' && tokenVer2[1] == 'C') || (tokenVer2[0] == ')' && tokenVer2[1] == 'T')) {
+			if (tokenVer2[1] == 'S') {
+				std::string num = tokenVer2.substr(4);
+				float result = std::stof(num);
+				result = (std::sinf(result) * -1);
+				decimal = std::modf(result, &whole);
+				if (decimal == 0.0f) {
+					int result2 = result;
+					textBox->WriteText(std::to_string(result2) + " (radians)");
+				}
+				else {
+					textBox->WriteText(std::to_string(result) + " (radians)");
+				}
+			}
+			else if (tokenVer2[1] == 'C') {
+				std::string num = tokenVer2.substr(4);
+				float result = std::stof(num);
+				result = (std::cosf(result) * -1);
+				decimal = std::modf(result, &whole);
+				if (decimal == 0.0f) {
+					int result2 = result;
+					textBox->WriteText(std::to_string(result2) + " (radians)");
+				}
+				else {
+					textBox->WriteText(std::to_string(result) + " (radians)");
+				}
+			}
+			else if (tokenVer2[1] == 'T') {
+				std::string num = tokenVer2.substr(4);
+				float result = std::stof(num);
+				result = (std::tanf(result * -1));
+				decimal = std::modf(result, &whole);
+				if (decimal == 0.0f) {
+					int result2 = result;
+					textBox->WriteText(std::to_string(result2) + " (radians)");
+				}
+				else {
+					textBox->WriteText(std::to_string(result) + " (radians)");
+				}
+			}
+			continue;
+		}
+		//calculations for if the number is being squared
+		if (tokenVer2.size() > 1 && tokenVer2[tokenVer2.size() - 2] == '²') {
+			if (tokenVer2[0] == ')') {
+				tokenVer2 = tokenVer2.substr(1);
+			}
+			result = std::stof(tokenVer2);
+			result *= result;
+			decimal = std::modf(result, &whole);
+			if (decimal == 0.0f) {
+				int result2 = result;
+				textBox->WriteText(std::to_string(result2));
+			}
+			else {
+				textBox->WriteText(std::to_string(result));
+			}
+			continue;
+		}
+		//calculations for if the first half of the equation/the operand is negative [+-*/%]
+		if (isNumber(token.ToStdString()) || token.ToStdString()[0] == ')') {
+			std::string tokenVer2 = token.ToStdString();
+			if (tokenVer2[0] == ')' && tokenizer.HasMoreTokens()) {
+				tokenVer2 = tokenVer2.substr(1);
+				result = (std::stof(tokenVer2) * -1);
+			}
+			//calculations for if the second half of the equation/the operand is negative [+-*/% sin/cos/tan (for unary operators the negative is between the operator and the term]
+			else if (tokenVer2[0] == ')' && tokenizer.HasMoreTokens() == false) {
+				for (int i = 0; i < text.size(); i++) {
+					if (text[i] == '+') {
+						tokenVer2 = tokenVer2.substr(1, tokenVer2.length());
+						result += (std::stof(tokenVer2) * -1);
+						decimal = std::modf(result, &whole);
+						if (decimal == 0.0f) {
+							int result2 = result;
+							textBox->WriteText(std::to_string(result2));
+						}
+						else {
+							textBox->WriteText(std::to_string(result));
+						}
+						break;
+					}
+					else if (text[i] == '-') {
+						if (text.Contains("-") && text.Contains("+") || text.Contains("-") && text.Contains("*") || text.Contains("-") && text.Contains("/")
+							|| text.Contains("-") && text.Contains("%")) {
+							continue;
+						}
+						tokenVer2 = tokenVer2.substr(1, tokenVer2.length());
+						result -= (std::stof(tokenVer2) * -1);
+						decimal = std::modf(result, &whole);
+						if (decimal == 0.0f) {
+							int result2 = result;
+							textBox->WriteText(std::to_string(result2));
+						}
+						else {
+							textBox->WriteText(std::to_string(result));
+						}
+						break;
+					}
+					else if (text[i] == '*') {
+						tokenVer2 = tokenVer2.substr(1, tokenVer2.length());
+						result *= (std::stof(tokenVer2) * -1);
+						decimal = std::modf(result, &whole);
+						if (decimal == 0.0f) {
+							int result2 = result;
+							textBox->WriteText(std::to_string(result2));
+						}
+						else {
+							textBox->WriteText(std::to_string(result));
+						}
+						break;
+					}
+					else if (text[i] == '/') {
+						tokenVer2 = tokenVer2.substr(1, tokenVer2.length());
+						if (std::stof(tokenVer2) != 0) {
+							result /= (std::stof(tokenVer2) * -1);
+							decimal = std::modf(result, &whole);
+							if (decimal == 0.0f) {
+								int result2 = result;
+								textBox->WriteText(std::to_string(result2));
+							}
+							else {
+								textBox->WriteText(std::to_string(result));
+							}
+						}
+						else {
+							textBox->WriteText("Cannot divide by 0");
+						}
+						break;
+					}
+					else if (text[i] == '%') {
+						tokenVer2 = tokenVer2.substr(1, tokenVer2.length());
+						if (std::stof(tokenVer2) != 0) {
+							result = std::fmodf(result, std::stof(tokenVer2));
+							decimal = std::modf(result, &whole);
+							if (decimal == 0.0f) {
+								int result2 = result;
+								textBox->WriteText(std::to_string(result2));
+							}
+							else {
+								textBox->WriteText(std::to_string(result));
+							}
+						}
+						else {
+							textBox->WriteText("Cannot mod by 0");
+						}
+						break;
+					}
+					else if (text[i] == 'S') {
+						tokenVer2 = tokenVer2.substr(1, tokenVer2.length());
+						std::string num = tokenVer2;
+						float result = std::stof(num);
+						result = std::sinf(result * -1);
+						decimal = std::modf(result, &whole);
+						if (decimal == 0.0f) {
+							int result2 = result;
+							textBox->WriteText(std::to_string(result2) + " (radians)");
+						}
+						else {
+							textBox->WriteText(std::to_string(result) + " (radians)");
+						}
+						break;
+					}
+					else if (text[i] == 'C') {
+						tokenVer2 = tokenVer2.substr(1, tokenVer2.length());
+						std::string num = tokenVer2;
+						float result = std::stof(num);
+						result = std::cosf(result * -1);
+						decimal = std::modf(result, &whole);
+						if (decimal == 0.0f) {
+							int result2 = result;
+							textBox->WriteText(std::to_string(result2) + " (radians)");
+						}
+						else {
+							textBox->WriteText(std::to_string(result) + " (radians)");
+						}
+						break;
+					}
+					else if (text[i] == 'T') {
+						tokenVer2 = tokenVer2.substr(1, tokenVer2.length());
+						std::string num = tokenVer2;
+						float result = std::stof(num);
+						result = std::tanf(result * -1);
+						decimal = std::modf(result, &whole);
+						if (decimal == 0.0f) {
+							int result2 = result;
+							textBox->WriteText(std::to_string(result2) + " (radians)");
+						}
+						else {
+							textBox->WriteText(std::to_string(result) + " (radians)");
+						}
+						break;
+					}
+				}
+				continue;
+			}
+			else {
+				result = std::stof(tokenVer2);
+			}
+			//positive +-*/% calculations -> if runs into the start of a negative number '(' calls continue
+			if (tokenizer.GetLastDelimiter() == '+') {
+				wxString token = tokenizer.GetNextToken();
+				std::string tokenVer2 = token.ToStdString();
+				if (tokenVer2[0] == '(') {
+					continue;
+				}
+				result += std::stof(tokenVer2);
+				decimal = std::modf(result, &whole);
+				if (decimal == 0.0f) {
+					int result2 = result;
+					textBox->WriteText(std::to_string(result2));
+				}
+				else {
+					textBox->WriteText(std::to_string(result));
+				}
+			}
+			else if (tokenizer.GetLastDelimiter() == '-') {
+				wxString token = tokenizer.GetNextToken();
+				std::string tokenVer2 = token.ToStdString();
+				if (tokenVer2[0] == '(') {
+					continue;
+				}
+				result -= std::stof(tokenVer2);
+				decimal = std::modf(result, &whole);
+				if (decimal == 0.0f) {
+					int result2 = result;
+					textBox->WriteText(std::to_string(result2));
+				}
+				else {
+					textBox->WriteText(std::to_string(result));
+				}
+			}
+			else if (tokenizer.GetLastDelimiter() == '*') {
+				wxString token = tokenizer.GetNextToken();
+				std::string tokenVer2 = token.ToStdString();
+				if (tokenVer2[0] == '(') {
+					continue;
+				}
+				result *= std::stof(tokenVer2);
+				decimal = std::modf(result, &whole);
+				if (decimal == 0.0f) {
+					int result2 = result;
+					textBox->WriteText(std::to_string(result2));
+				}
+				else {
+					textBox->WriteText(std::to_string(result));
+				}
+			}
+			else if (tokenizer.GetLastDelimiter() == '/') {
+				wxString token = tokenizer.GetNextToken();
+				std::string tokenVer2 = token.ToStdString();
+				if (tokenVer2[0] == '(') {
+					continue;
+				}
+				if (std::stof(tokenVer2) != 0) {
+					result /= std::stof(tokenVer2);
+					decimal = std::modf(result, &whole);
+					if (decimal == 0.0f) {
+						int result2 = result;
+						textBox->WriteText(std::to_string(result2));
+					}
+					else {
+						textBox->WriteText(std::to_string(result));
+					}
+				}
+				else {
+					textBox->WriteText("Cannot divide by 0");
+				}
+			}
+			else if (tokenizer.GetLastDelimiter() == '%') {
+				wxString token = tokenizer.GetNextToken();
+				std::string tokenVer2 = token.ToStdString();
+				if (tokenVer2[0] == '(') {
+					continue;
+				}
+				if (std::stof(tokenVer2) != 0) {
+					result = std::fmodf(result, std::stof(tokenVer2));
+					decimal = std::modf(result, &whole);
+					if (decimal == 0.0f) {
+						int result2 = result;
+						textBox->WriteText(std::to_string(result2));
+					}
+					else {
+						textBox->WriteText(std::to_string(result));
+					}
+				}
+				else {
+					textBox->WriteText("Cannot mod by 0");
+				}
+			}
+		}
+		//positive sin/cos/tan calculations
+		std::string tokenTemp = token.ToStdString();
+		std::string num = tokenTemp.substr(0, 3);
+		if (num == "Sin" || num == "Cos" || num == "Tan") {
+			if (tokenTemp[0] == 'S') {
+				std::string num = tokenTemp.substr(3);
+				float result = std::stof(num);
+				result = std::sinf(result);
+				decimal = std::modf(result, &whole);
+				if (decimal == 0.0f) {
+					int result2 = result;
+					textBox->WriteText(std::to_string(result2) + " (radians)");
+				}
+				else {
+					textBox->WriteText(std::to_string(result) + " (radians)");
+				}
+			}
+			else if (tokenTemp[0] == 'C') {
+				std::string num = tokenTemp.substr(3);
+				float result = std::stof(num);
+				result = std::cosf(result);
+				decimal = std::modf(result, &whole);
+				if (decimal == 0.0f) {
+					int result2 = result;
+					textBox->WriteText(std::to_string(result2) + " (radians)");
+				}
+				else {
+					textBox->WriteText(std::to_string(result) + " (radians)");
+				}
+			}
+			else if (tokenTemp[0] == 'T') {
+				std::string num = tokenTemp.substr(3);
+				float result = std::stof(num);
+				result = std::tanf(result);
+				decimal = std::modf(result, &whole);
+				if (decimal == 0.0f) {
+					int result2 = result;
+					textBox->WriteText(std::to_string(result2) + " (radians)");
+				}
+				else {
+					textBox->WriteText(std::to_string(result) + " (radians)");
+				}
+			}
+		}
+	}
+}
+
+void Window::clearEvent(wxCommandEvent&)
+{
+	textBox->Clear();
+}
+
+void Window::deleteEvent(wxCommandEvent&)
+{
+	wxString text = textBox->GetValue();
+	if (!text.IsEmpty()) {
+		//checks if the string ends with s or n meaning it would be a unary operator, and removes three characters instead of 1 to remove the unary operator
+		if (text.ends_with("s") || text.ends_with("n")) {
+			textBox->Remove(text.length() - 3, text.length());
+		}
+		else { //otherwise just removes the last character
+			textBox->Remove(text.length() - 1, text.length());
+		}
+	}
+}
+
+void Window::decimalEvent(wxCommandEvent&)
+{
+	textBox->WriteText(".");
+}
+
+void Window::negativeEvent(wxCommandEvent&)
+{
+	textBox->WriteText("(-)");
+}
+
+void Window::squaredEvent(wxCommandEvent&)
+{
+	textBox->WriteText("²");
+}
+
+//custom isNuber function
+bool Window::isNumber(std::string str)
+{
+	std::size_t pos(0);
+	if (str[pos] == '+' || str[pos] == '-') ++pos; //ignores sign if needed
+
+	int num;
+	int pt;
+	//checks if the number is a valid whole number or decimal
+	for (num = 0, pt = 0; std::isdigit(str[pos]) || str[pos] == '.'; ++pos) {
+		str[pos] == '.' ? ++pt : ++num;
+	}
+	if (pt > 1 || num < 1) //makes sure that there is only one point and an actual num
+		return false;
+
+	return pos == str.size(); //makes sure the entire string is checked
 }

@@ -3,7 +3,10 @@
 
 class Window : public wxFrame //windows class deriving from wxFrame
 {
+	wxDECLARE_EVENT_TABLE(); //event table declaration
+
 private:
+	//BUTTONS
 	//text control
 	wxTextCtrl* textBox = nullptr;
 	//numbers 0-9
@@ -32,13 +35,44 @@ private:
 	//clear
 	wxButton* clear = nullptr;
 	//backspace
-	wxButton* backspace = nullptr;
+	wxButton* del = nullptr;
 	//decimal
 	wxButton* decimal = nullptr;
 	//negative
 	wxButton* negative = nullptr;
 	//x^2 (adding extra to make buttons even)
 	wxButton* squared = nullptr;
+	
+	//EVENTS
+	void zeroEvent(wxCommandEvent&); //zero event
+	void oneEvent(wxCommandEvent&); //one event
+	void twoEvent(wxCommandEvent&); //two event
+	void threeEvent(wxCommandEvent&); //three event
+	void fourEvent(wxCommandEvent&); //four event
+	void fiveEvent(wxCommandEvent&); //five event
+	void sixEvent(wxCommandEvent&); //six event
+	void sevenEvent(wxCommandEvent&); //seven event
+	void eightEvent(wxCommandEvent&); //eight event
+	void nineEvent(wxCommandEvent&); //nine event
+
+	void addEvent(wxCommandEvent&); //addition event
+	void minusEvent(wxCommandEvent&); //subtraction event
+	void multiplyEvent(wxCommandEvent&); //multiplication event
+	void divideEvent(wxCommandEvent&); //division event
+	void modEvent(wxCommandEvent&); //modulo event
+
+	void sinEvent(wxCommandEvent&); //sin event
+	void cosEvent(wxCommandEvent&); //cos event
+	void tanEvent(wxCommandEvent&); //tan event
+
+	void equalsEvent(wxCommandEvent&); //equals event
+	void clearEvent(wxCommandEvent&); //clear event
+	void deleteEvent(wxCommandEvent&); //del event
+	void decimalEvent(wxCommandEvent&); //decimal event
+	void negativeEvent(wxCommandEvent&); //negative event
+	void squaredEvent(wxCommandEvent&); //squared event
+
+	bool isNumber(std::string s); //custom isNumber function
 public:
 	Window(); //default constructor
 };
