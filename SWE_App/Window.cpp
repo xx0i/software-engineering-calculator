@@ -33,39 +33,19 @@ Window::Window() : wxFrame(nullptr, wxID_ANY, "Calculator", wxPoint(200, 200), w
 {
 	//text control
 	textBox = new wxTextCtrl(this, 12312, "", wxPoint(16, 20), wxSize(345, 166));
-	//numbers 0-9
-	zero = new wxButton(this, 20123, "0", wxPoint(20, 200), wxSize(40, 40));
-	one = new wxButton(this, 11212, "1", wxPoint(80, 200), wxSize(40, 40));
-	two = new wxButton(this, 32313, "2", wxPoint(140, 200), wxSize(40, 40));
-	three = new wxButton(this, 13212, "3", wxPoint(200, 200), wxSize(40, 40));
-	four = new wxButton(this, 24234, "4", wxPoint(260, 200), wxSize(40, 40));
-	five = new wxButton(this, 15623, "5", wxPoint(20, 254), wxSize(40, 40));
-	six = new wxButton(this, 13523, "6", wxPoint(80, 254), wxSize(40, 40));
-	seven = new wxButton(this, 14322, "7", wxPoint(140, 254), wxSize(40, 40));
-	eight = new wxButton(this, 25453, "8", wxPoint(200, 254), wxSize(40, 40));
-	nine = new wxButton(this, 15354, "9", wxPoint(260, 254), wxSize(40, 40));
-	//binary operators
-	addition = new wxButton(this, 26433, "+", wxPoint(20, 308), wxSize(40, 40));
-	subtraction = new wxButton(this, 18743, "-", wxPoint(80, 308), wxSize(40, 40));
-	multiplication = new wxButton(this, 32412, "*", wxPoint(140, 308), wxSize(40, 40));
-	division = new wxButton(this, 25231, "/", wxPoint(200, 308), wxSize(40, 40));
-	modulo = new wxButton(this, 12643, "%", wxPoint(260, 308), wxSize(40, 40));
-	//unary operators
-	sin = new wxButton(this, 16431, "sin", wxPoint(80, 362), wxSize(40, 40));
-	cos = new wxButton(this, 19321, "cos", wxPoint(140, 362), wxSize(40, 40));
-	tan = new wxButton(this, 15423, "tan", wxPoint(200, 362), wxSize(40, 40));
-	//equals
-	equals = new wxButton(this, 32134, "=", wxPoint(320, 200), wxSize(40, 40));
-	//clear
-	clear = new wxButton(this, 32221, "clear", wxPoint(320, 254), wxSize(40, 40));
-	//backspace
-	del = new wxButton(this, 31123, "delete", wxPoint(320, 308), wxSize(40, 40));
-	//decimal
-	decimal = new wxButton(this, 17934, "dec.(.)", wxPoint(260, 362), wxSize(40, 40));
-	//negative
-	negative = new wxButton(this, 29723, "neg.(-)", wxPoint(320, 362), wxSize(40, 40));
-	//x^2 (adding extra to make buttons even)
-	squared = new wxButton(this, 31323, "x²", wxPoint(20, 362), wxSize(40, 40));
+	//BUTTON INITIALIZATION
+	//vector initialization txt(what appears on the button), ID(id used in event table), buttons(holds the buttons)
+	buttonTxt = {{"0", "1", "2", "3", "4", "="}, {"5", "6", "7", "8", "9", "clear"}, {"+", "-", "*", "/", "%", "delete"}, {"x²", "sin", "cos", "tan", "dec.(.)", "neg.(-)"}};
+	buttonID = {{20123, 11212, 32313, 13212, 24234, 32134}, {15623, 13523, 14322, 25453, 15354, 32221}, 
+		{26433, 18743, 32412, 25231, 12643, 31123}, {31323, 16431, 19321, 15423, 17934, 29723}};
+	buttons = {{zero, one, two, three, four, equals}, {five, six, seven, eight, nine, clear},
+		{addition, subtraction, multiplication, division, modulo, del}, {squared, sin, cos, tan, decimal, negative}};
+	//nested for-loop used to actually initialize the buttons
+	for (int row = 0; row < buttonTxt.size(); row++) {
+		for (int col = 0; col < buttonTxt[row].size(); col++) {
+			buttons[row][col] = new wxButton(this, buttonID[row][col], buttonTxt[row][col], wxPoint(startX+col*spaceX, startY+row*spaceY), wxSize(buttonWidth, buttonHeight));
+		}
+	}
 }
 
 //BUTTON EVENTS

@@ -42,6 +42,18 @@ private:
 	wxButton* negative = nullptr;
 	//x^2 (adding extra to make buttons even)
 	wxButton* squared = nullptr;
+
+	//ints used in button initialization
+	int buttonWidth = 40;
+	int buttonHeight = 40;
+	int startX = 20;
+	int startY = 200;
+	int spaceX = 60;
+	int spaceY = 54;
+	
+	std::vector<std::vector<std::string>> buttonTxt;
+	std::vector<std::vector<int>> buttonID;
+	std::vector<std::vector<wxButton*>> buttons;
 	
 	//EVENTS
 	void zeroEvent(wxCommandEvent&); //zero event
@@ -73,6 +85,7 @@ private:
 	void squaredEvent(wxCommandEvent&); //squared event
 
 	bool isNumber(std::string s); //custom isNumber function
+
 public:
 	Window(); //default constructor
 };
