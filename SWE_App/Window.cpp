@@ -1,5 +1,6 @@
 #include "Window.h"
 #include <wx/tokenzr.h>
+#include "ButtonFactory.h"
 
 //EVENT TABLE
 wxBEGIN_EVENT_TABLE(Window, wxFrame)
@@ -34,16 +35,18 @@ Window::Window() : wxFrame(nullptr, wxID_ANY, "Calculator", wxPoint(200, 200), w
 	//text control
 	textBox = new wxTextCtrl(this, 12312, "", wxPoint(16, 20), wxSize(345, 166));
 	//BUTTON INITIALIZATION
-	//vector initialization txt(what appears on the button), ID(id used in event table), buttons(holds the buttons)
-	buttonTxt = {{"0", "1", "2", "3", "4", "="}, {"5", "6", "7", "8", "9", "clear"}, {"+", "-", "*", "/", "%", "delete"}, {"x²", "sin", "cos", "tan", "dec.(.)", "neg.(-)"}};
-	buttonID = {{20123, 11212, 32313, 13212, 24234, 32134}, {15623, 13523, 14322, 25453, 15354, 32221}, 
-		{26433, 18743, 32412, 25231, 12643, 31123}, {31323, 16431, 19321, 15423, 17934, 29723}};
+	//ButtonFactory instance created + buttons vector initialized to hold the buttons
+	ButtonFactory::getInstance();
+	buttonLabels = { {"0", "1", "2", "3", "4", "="}, {"5", "6", "7", "8", "9", "clear"},
+	{"+", "-", "*", "/", "%", "delete"}, {"x²", "sin", "cos", "tan", "dec.(.)", "neg.(-)"} };
+	buttonIds = { {20123, 11212, 32313, 13212, 24234, 32134}, {15623, 13523, 14322, 25453, 15354, 32221},
+		{26433, 18743, 32412, 25231, 12643, 31123}, {31323, 16431, 19321, 15423, 17934, 29723} };
 	buttons = {{zero, one, two, three, four, equals}, {five, six, seven, eight, nine, clear},
 		{addition, subtraction, multiplication, division, modulo, del}, {squared, sin, cos, tan, decimal, negative}};
 	//nested for-loop used to actually initialize the buttons
-	for (int row = 0; row < buttonTxt.size(); row++) {
-		for (int col = 0; col < buttonTxt[row].size(); col++) {
-			buttons[row][col] = new wxButton(this, buttonID[row][col], buttonTxt[row][col], wxPoint(startX+col*spaceX, startY+row*spaceY), wxSize(buttonWidth, buttonHeight));
+	for (int row = 0; row < buttons.size(); row++) {
+		for (int col = 0; col < buttons[row].size(); col++) {
+			ButtonFactory::createButton(buttons[row][col], this, buttonIds[row][col], buttonLabels[row][col], row, col); //calls createButton from ButtonFactory with necessary parameters
 		}
 	}
 }
@@ -548,8 +551,9 @@ void Window::deleteEvent(wxCommandEvent&)
 {
 	wxString text = textBox->GetValue();
 	if (!text.IsEmpty()) {
-		//checks if the string ends with s or n meaning it would be a unary operator, and removes three characters instead of 1 to remove the unary operator
-		if (text.ends_with("s") || text.ends_with("n")) {
+		//checks if the string ends with s,n, or ) meaning it would be a unary operator or a negative,
+		//and removes three characters instead of 1 to remove the unary operator or negative sign
+		if (text.ends_with("s") || text.ends_with("n") || text.ends_with(")")) {
 			textBox->Remove(text.length() - 3, text.length());
 		}
 		else { //otherwise just removes the last character

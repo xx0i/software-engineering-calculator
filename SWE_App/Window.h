@@ -6,6 +6,7 @@ class Window : public wxFrame //windows class deriving from wxFrame
 	wxDECLARE_EVENT_TABLE(); //event table declaration
 
 private:
+	~Window(){}
 	//BUTTONS
 	//text control
 	wxTextCtrl* textBox = nullptr;
@@ -43,16 +44,9 @@ private:
 	//x^2 (adding extra to make buttons even)
 	wxButton* squared = nullptr;
 
-	//ints used in button initialization
-	int buttonWidth = 40;
-	int buttonHeight = 40;
-	int startX = 20;
-	int startY = 200;
-	int spaceX = 60;
-	int spaceY = 54;
-	
-	std::vector<std::vector<std::string>> buttonTxt;
-	std::vector<std::vector<int>> buttonID;
+	//vectors used in button initialization
+	std::vector<std::vector<std::string>> buttonLabels;
+	std::vector<std::vector<int>> buttonIds;
 	std::vector<std::vector<wxButton*>> buttons;
 	
 	//EVENTS
