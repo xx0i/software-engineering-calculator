@@ -207,7 +207,7 @@ void Window::equationSolving() {
 		if ((token.size() > 1 && token[token.size() - 1] == '²')) {
 			continue;
 		}
-
+		//checks if number is followed by a unary function [8 Cos7]
 		if (CalculatorProcessor::isNumber(token)) {
 			if (tokenizer.HasMoreTokens()) {
 				ogToken = tokenizer.GetNextToken();
