@@ -91,8 +91,8 @@ std::string CalculatorProcessor::infixToPostfix(std::string text) {
             unaryFunc += token;
             unaryFunc.erase(unaryFunc.end() - 1);
             token.erase(token.begin(), token.begin()+3);
-            std::string te = std::to_string(evaluateTrigFunction(unaryFunc, std::stof(token)));
-            postFix += te + " ";
+            std::string solvedTrig = std::to_string(evaluateTrigFunction(unaryFunc, std::stof(token)));
+            postFix += solvedTrig + " ";
         }
     }
 

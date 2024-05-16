@@ -11,7 +11,6 @@ private:
 
 	//vectors used in button initialization
 	std::vector<std::vector<std::string>> buttonLabels;
-	std::vector<std::vector<int>> buttonIds;
 	std::vector<std::vector<wxButton*>> buttons;
 
 	//BUTTONS

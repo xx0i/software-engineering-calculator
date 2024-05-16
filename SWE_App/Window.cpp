@@ -17,103 +17,77 @@ Window::Window() : wxFrame(nullptr, wxID_ANY, "Calculator", wxPoint(200, 200), w
 	ButtonFactory::getInstance();
 	buttonLabels = { {"0", "1", "2", "3", "4", "="}, {"5", "6", "7", "8", "9", "clear"},
 	{"+", "-", "*", "/", "%", "delete"}, {"x²", "sin", "cos", "tan", "dec.(.)", "neg.(-)"} };
-	buttonIds = { {20123, 11212, 32313, 13212, 24234, 32134}, {15623, 13523, 14322, 25453, 15354, 32221},
-		{26433, 18743, 32412, 25231, 12643, 31123}, {31323, 16431, 19321, 15423, 17934, 29723} };
 	buttons = { {zero, one, two, three, four, equals}, {five, six, seven, eight, nine, clear},
 		{addition, subtraction, multiplication, division, modulo, del}, {squared, sin, cos, tan, decimal, negative} };
 	//nested for-loop used to actually initialize the buttons
 	for (int row = 0; row < buttons.size(); row++) {
 		for (int col = 0; col < buttons[row].size(); col++) {
-			ButtonFactory::createButton(buttons[row][col], this, buttonIds[row][col], buttonLabels[row][col], row, col); //calls createButton from ButtonFactory with necessary parameters
+			ButtonFactory::createButton(buttons[row][col], this, buttonLabels[row][col], row, col); //calls createButton from ButtonFactory with necessary parameters
 		}
 	}
 }
 
 //MANAGES BUTTON PRESSING
 void Window::buttonClickEvent(wxCommandEvent& event) {
-	int id = event.GetId();
-	switch (id) {
-		//NUMBER CASES
-	case 20123: {
+	std::string label = std::string((wxDynamicCast(event.GetEventObject(), wxButton))->GetLabel());
+	if (label == "0") {
 		textBox->WriteText("0");
-		break;
 	}
-	case 11212: {
+	else if (label == "1") {
 		textBox->WriteText("1");
-		break;
 	}
-	case 32313: {
+	else if (label == "2") {
 		textBox->WriteText("2");
-		break;
 	}
-	case 13212: {
+	else if (label == "3") {
 		textBox->WriteText("3");
-		break;
 	}
-	case 24234: {
+	else if (label == "4") {
 		textBox->WriteText("4");
-		break;
 	}
-	case 15623: {
+	else if (label == "5") {
 		textBox->WriteText("5");
-		break;
 	}
-	case 13523: {
+	else if (label == "6") {
 		textBox->WriteText("6");
-		break;
 	}
-	case 14322: {
+	else if (label == "7") {
 		textBox->WriteText("7");
-		break;
 	}
-	case 25453: {
+	else if (label == "8") {
 		textBox->WriteText("8");
-		break;
 	}
-	case 15354: {
+	else if (label == "9") {
 		textBox->WriteText("9");
-		break;
 	}
-			  //BINARY OPERATOR CASES
-	case 26433: {
+	else if (label == "+") {
 		textBox->WriteText(" + ");
-		break;
 	}
-	case 18743: {
+	else if (label == "-") {
 		textBox->WriteText(" - ");
-		break;
 	}
-	case 32412: {
+	else if (label == "*") {
 		textBox->WriteText(" * ");
-		break;
 	}
-	case 25231: {
+	else if (label == "/") {
 		textBox->WriteText(" / ");
-		break;
 	}
-	case 12643: {
+	else if (label == "%") {
 		textBox->WriteText(" % ");
-		break;
 	}
-			  //UNARY OPERATOR CASES
-	case 16431: {
+	else if (label == "sin") {
 		textBox->WriteText(" Sin");
-		break;
 	}
-	case 19321: {
+	else if (label == "cos") {
 		textBox->WriteText(" Cos");
-		break;
 	}
-	case 15423: {
+	else if (label == "tan") {
 		textBox->WriteText(" Tan");
-		break;
 	}
-			  //EQUAL/CLEAR/DELTE
-	case 32221: {
+	else if (label == "clear") {
 		textBox->Clear();
-		break;
 	}
-	case 31123: { 
+	else if (label == "delete") {
 		wxString text = textBox->GetValue();
 		if (!text.IsEmpty()) {
 			//checks if the string ends with s,n, or a space) meaning it would be an operator (unary or binary),
@@ -125,26 +99,19 @@ void Window::buttonClickEvent(wxCommandEvent& event) {
 				textBox->Remove(text.length() - 1, text.length());
 			}
 		}
-		break;
 	}
-	case 32134: {
+	else if (label == "=") {
 		equationSolving();
-		break;
 	}
-			  //DECIMAL/NEGATIVE/SQUARED(extra)
-	case 17934: {
+	else if (label == "dec.(.)") {
 		textBox->WriteText(".");
-		break;
 	}
-	case 29723: {
+	else if (label == "neg.(-)") {
 		textBox->WriteText("-");
-		break;
 	}
-	case 31323: {
+	else if (label == "x²") {
 		textBox->WriteText("²");
-		break;
 	}
-	};
 }
 
 //solves the equation when equals is pressed
@@ -170,7 +137,8 @@ void Window::equationSolving() {
 
 	//checks that the equation has a value before/after the operator
 	if ((text.ends_with("+ =")) || (text.ends_with("- =")) || (text.ends_with("* =")) || (text.ends_with("/ =")) || (text.ends_with("% =")) || (text.ends_with(".="))
-		|| (text.ends_with("-=")) || (text.ends_with("n=")) || (text.ends_with("s=")) || text[0] == '²' || text.Contains(".²")) {
+		|| (text.ends_with("-=")) || (text.ends_with("n=")) || (text.ends_with("s=")) || text[0] == '²' || text.Contains(".²")
+		|| text.Contains("+ ²") || text.Contains("- ²") || text.Contains("* ²") || text.Contains("/ ²") || text.Contains("% ²")){
 		textBox->WriteText("Invalid Equation, Please Enter a valid Equation");
 		return;
 	}
@@ -216,24 +184,27 @@ void Window::equationSolving() {
 					token2.erase(token2.end() - 1);
 
 					if (token2 == "Sin" || token2 == "Cos" || token2 == "Tan") {
-						text.insert(text.find_first_of(token) + 1, " *");
+						wxString toFind = token + " " + token2;
+						text.insert(text.find(toFind) + 2, "* ");
+						continue;
 					}
 				}
 			}
 		}
-
 		//checks for repeated Sin/Cos/Tan and adds a multiplication sign between to assist the shunting yard algorithm
 		if (!CalculatorProcessor::isOperator(token) && !CalculatorProcessor::isNumber(token)) {
-			token.erase(token.end() - 1);
-			if (token == "Sin" || token == "Cos" || token == "Tan") {
+			std::string tokenTrig = token;
+			tokenTrig.erase(tokenTrig.end() - 1);
+			if (tokenTrig == "Sin" || tokenTrig == "Cos" || tokenTrig == "Tan") {
 				if (tokenizer.HasMoreTokens()) {
 					ogToken = tokenizer.GetNextToken();
 					std::string token2 = ogToken.ToStdString();
 					if (!CalculatorProcessor::isOperator(token2) && !CalculatorProcessor::isNumber(token2)) {
-						token2.erase(token2.end() - 1);
-
-						if (token2 == "Sin" || token2 == "Cos" || token2 == "Tan") {
-							text.insert(text.find_first_of(token[2]) + 2, " * ");
+						std::string token2Trig = token2;
+						token2Trig.erase(token2Trig.end() - 1);
+						if (token2Trig == "Sin" || token2Trig == "Cos" || token2Trig == "Tan") {
+							wxString toFind = token + " " + token2;
+							text.insert(text.find(toFind) + 5, "* ");
 						}
 					}
 
