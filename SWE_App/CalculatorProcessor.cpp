@@ -78,8 +78,19 @@ std::string CalculatorProcessor::infixToPostfix(std::string text) {
             }*/
         }
         else if (token.size() > 1 && token[token.size() - 1] == '²') { //squares here and adds result to the postfix form
-            float result = std::stof(token);
-            result *= result;
+            float result;
+            if (token[0] == 'S' || token[0] == 'C' || token[0] == 'T') { //checks if a trig function is being squared
+                std::string val = token.substr(3);
+                result = std::stod(val);
+                result *= result;
+                token.erase(token.begin() + 3, token.end());
+                result = evaluateTrigFunction(token,result);
+
+            }
+            else { //otherwise if a regular number is being squared
+                result = std::stof(token);
+                result *= result;
+            }
             std::string resultSquared = std::to_string(result);
             postFix += resultSquared + " ";
         }
@@ -89,7 +100,7 @@ std::string CalculatorProcessor::infixToPostfix(std::string text) {
         else if (token[0] == 'S' || token[0] == 'C' || token[0] == 'T') { //if the token is an unary operator -> separates num and txt and passes to evaluate trig function
             std::string unaryFunc;
             unaryFunc += token;
-            unaryFunc.erase(unaryFunc.end() - 1);
+            unaryFunc.erase(unaryFunc.begin() + 3, unaryFunc.end());
             token.erase(token.begin(), token.begin()+3);
             std::string solvedTrig = std::to_string(evaluateTrigFunction(unaryFunc, std::stof(token)));
             postFix += solvedTrig + " ";

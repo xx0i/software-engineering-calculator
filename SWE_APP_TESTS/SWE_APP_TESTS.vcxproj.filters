@@ -27,21 +27,9 @@
     <ClCompile Include="CalculatorProcessorTests.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="..\SWE_App\ButtonFactory.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="..\SWE_App\CalculatorProcessor.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="pch.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\SWE_App\ButtonFactory.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\SWE_App\CalculatorProcessor.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

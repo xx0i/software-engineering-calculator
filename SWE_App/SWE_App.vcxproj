@@ -130,6 +130,8 @@
       <ConformanceMode>true</ConformanceMode>
       <AdditionalIncludeDirectories>
       </AdditionalIncludeDirectories>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+      <PrecompiledHeaderFile>stdfax.h</PrecompiledHeaderFile>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
