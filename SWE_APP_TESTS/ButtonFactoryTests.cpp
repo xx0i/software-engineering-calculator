@@ -4,9 +4,9 @@
 
 using namespace Microsoft::VisualStudio::CppUnitTestFramework;
 
-namespace buttonFactTests
+namespace buttonFactoryTests
 {
-	TEST_CLASS(buttonFactTests)
+	TEST_CLASS(buttonFactoryTests)
 	{
 	public:
 		//FOR THE NEXT 2 TESTS createGeneralButton : only checks id instead of every part since it isn't actually used in my code

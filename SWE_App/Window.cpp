@@ -138,7 +138,7 @@ void Window::equationSolving() {
 	//checks that the equation has a value before/after the operator
 	if ((text.ends_with("+ =")) || (text.ends_with("- =")) || (text.ends_with("* =")) || (text.ends_with("/ =")) || (text.ends_with("% =")) || (text.ends_with(".="))
 		|| (text.ends_with("-=")) || (text.ends_with("n=")) || (text.ends_with("s=")) || text[0] == '²' || text.Contains(".²")
-		|| text.Contains("+ ²") || text.Contains("- ²") || text.Contains("* ²") || text.Contains("/ ²") || text.Contains("% ²")){
+		|| text.Contains("+ ²") || text.Contains("- ²") || text.Contains("* ²") || text.Contains("/ ²") || text.Contains("% ²")) {
 		textBox->WriteText("Invalid Equation, Please Enter a valid Equation");
 		return;
 	}

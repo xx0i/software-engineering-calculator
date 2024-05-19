@@ -73,15 +73,12 @@ std::string CalculatorProcessor::infixToPostfix(std::string text) {
                 operators.pop();
             }
             operators.push(token);
-            /*if (isOperator((tokenizer.GetNextToken()).ToStdString())) {
-                return ("Invalid Equation, Please Enter a valid Equation");
-            }*/
         }
         else if (token.size() > 1 && token[token.size() - 1] == '²') { //squares here and adds result to the postfix form
             float result;
             if (token[0] == 'S' || token[0] == 'C' || token[0] == 'T') { //checks if a trig function is being squared
                 std::string val = token.substr(3);
-                result = std::stod(val);
+                result = std::stof(val);
                 result *= result;
                 token.erase(token.begin() + 3, token.end());
                 result = evaluateTrigFunction(token,result);
